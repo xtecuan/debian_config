@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<!--[if IE 6]> <html id="ie6" lang="en-US"> <![endif]-->
+<!--[if IE 7]> <html id="ie7" lang="en-US"> <![endif]-->
+<!--[if IE 8]> <html id="ie8" lang="en-US"> <![endif]-->
+<!--[if !(IE 6) | !(IE 7) | !(IE 8)]><!--> <html lang="en-US"> <!--<![endif]-->
+<head>
+<meta charset="UTF-8"/>
+<link rel="pingback" href="//www.debianadmin.com/xmlrpc.php"/>
+<title> Users and Groups Administration in Linux</title>
+<meta name="keywords" content="Debian tutorials,Ubuntu tutorials,Debian server tutorials,ubuntu tips,debian tips,debian mail server,debian lamp server,ubuntu desktop tutorials,debian server setup,debian backup server,debian web server,Ubuntu Screenshots.Lubuntu Screenshots"/>
+<!--[if lt IE 9]>
+	<script src="//www.debianadmin.com/wp-content/themes/suffusion/scripts/html5.js" type="text/javascript"></script>
+	<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="Debian Admin &raquo; Feed" href="//www.debianadmin.com/feed"/>
+<link rel="alternate" type="application/rss+xml" title="Debian Admin &raquo; Comments Feed" href="//www.debianadmin.com/comments/feed"/>
+<style type="text/css" media="screen">form dl,dl.labels{margin:0em;font-size:100%;margin-top:0.5em}form dt,dl.labels dt{float:left;width:10em;margin-bottom:0.8em;color:#555;text-align:right;font-weight:normal;position:relative}form dd,dl.labels dd{margin-left:10.5em;margin-bottom:0.8em;font-size:100%;font-style:normal;padding-left:0.5em}form dd.submit,dl.labels dd.submit{margin-top:2em}</style>
+<link rel="alternate" type="application/rss+xml" title="Debian Admin &raquo; Users and Groups Administration in Linux Comments Feed" href="//www.debianadmin.com/users-and-groups-administration-in-linux.html/feed"/>
+<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.debianadmin.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.3.1"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+<style type="text/css">img.wp-smiley,img.emoji{display:inline!important;border:none!important;box-shadow:none!important;height:1em!important;width:1em!important;margin:0 .07em!important;vertical-align:-0.1em!important;background:none!important;padding:0!important;}</style>
+<link rel='stylesheet' id='jquery.slimbox-css' href='//www.debianadmin.com/wp-content/plugins/slimbox/stylesheets/jquery.slimbox.css?ver=2.03' type='text/css' media='all'/>
+<link rel='stylesheet' id='gsc_style-css' href='//www.debianadmin.com/wp-content/plugins/google-custom-search/css/smoothness/jquery-ui.theme.min.css?ver=4.3.1' type='text/css' media='all'/>
+<link rel='stylesheet' id='gsc_style_search_bar-css' href='//www.google.com/cse/style/look/minimalist.css?ver=4.3.1' type='text/css' media='all'/>
+<link rel='stylesheet' id='gsc_style_search_bar_more-css' href='//www.debianadmin.com/wp-content/plugins/google-custom-search/css/gsc.css?ver=4.3.1' type='text/css' media='all'/>
+<link rel='stylesheet' id='responsive-lightbox-prettyphoto-front-css' href='//www.debianadmin.com/wp-content/plugins/responsive-lightbox/assets/prettyphoto/css/prettyPhoto.css?ver=4.3.1' type='text/css' media='all'/>
+<link rel='stylesheet' id='wp-email-css' href='//www.debianadmin.com/wp-content/plugins/wp-email/email-css.css?ver=2.60' type='text/css' media='all'/>
+<link rel='stylesheet' id='suffusion-theme-css' href='//www.debianadmin.com/wp-content/themes/suffusion/style.css?ver=4.4.7' type='text/css' media='all'/>
+<link rel='stylesheet' id='suffusion-theme-skin-1-css' href='//www.debianadmin.com/wp-content/themes/suffusion/skins/light-theme-purple/skin.css?ver=4.4.7' type='text/css' media='all'/>
+<!--[if !IE]>--><link rel='stylesheet' id='suffusion-rounded-css' href='//www.debianadmin.com/wp-content/themes/suffusion/rounded-corners.css?ver=4.4.7' type='text/css' media='all'/>
+<!--<![endif]-->
+<!--[if gt IE 8]><link rel='stylesheet' id='suffusion-rounded-css'  href='//www.debianadmin.com/wp-content/themes/suffusion/rounded-corners.css?ver=4.4.7' type='text/css' media='all' />
+<![endif]-->
+<!--[if lt IE 8]><link rel='stylesheet' id='suffusion-ie-css'  href='//www.debianadmin.com/wp-content/themes/suffusion/ie-fix.css?ver=4.4.7' type='text/css' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='suffusion-generated-css' href='//www.debianadmin.com/wp-content/uploads/suffusion/custom-styles.css?ver=4.4.7' type='text/css' media='all'/>
+<link rel='stylesheet' id='wordpress-popular-posts-css' href='//www.debianadmin.com/wp-content/plugins/wordpress-popular-posts/style/wpp.css?ver=3.3.1' type='text/css' media='all'/>
+<link rel='stylesheet' id='better-related-frontend-css' href='//www.debianadmin.com/wp-content/plugins/better-related/css/better-related.css?ver=0.3.5' type='text/css' media='all'/>
+<script type='text/javascript' src='//www.debianadmin.com/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-content/plugins/slimbox/javascript/jquery.slimbox.js?ver=2.03'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-content/plugins/google-custom-search/js/gsc.js?ver=4.3.1'></script>
+<script type='text/javascript' src='//www.google.com/jsapi?ver=4.3.1'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-content/plugins/responsive-lightbox/assets/prettyphoto/js/jquery.prettyPhoto.js?ver=4.3.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var rlArgs = {"script":"prettyphoto","selector":"lightbox","custom_events":"","activeGalleries":"1","animationSpeed":"normal","slideshow":"1","slideshowDelay":"5000","slideshowAutoplay":"0","opacity":"0.75","showTitle":"0","allowResize":"1","allowExpand":"1","width":"1080","height":"720","separator":"\/","theme":"light_rounded","horizontalPadding":"20","hideFlash":"0","wmode":"opaque","videoAutoplay":"0","modal":"0","deeplinking":"0","overlayGallery":"1","keyboardShortcuts":"1","social":"0"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-content/plugins/responsive-lightbox/js/front.js?ver=4.3.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var Suffusion_JS = {"wrapper_width_type_page_template_1l_sidebar_php":"fixed","wrapper_max_width_page_template_1l_sidebar_php":"1200","wrapper_min_width_page_template_1l_sidebar_php":"600","wrapper_orig_width_page_template_1l_sidebar_php":"75","wrapper_width_type_page_template_1r_sidebar_php":"fixed","wrapper_max_width_page_template_1r_sidebar_php":"1200","wrapper_min_width_page_template_1r_sidebar_php":"600","wrapper_orig_width_page_template_1r_sidebar_php":"75","wrapper_width_type_page_template_1l1r_sidebar_php":"fixed","wrapper_max_width_page_template_1l1r_sidebar_php":"1200","wrapper_min_width_page_template_1l1r_sidebar_php":"600","wrapper_orig_width_page_template_1l1r_sidebar_php":"75","wrapper_width_type_page_template_2l_sidebars_php":"fixed","wrapper_max_width_page_template_2l_sidebars_php":"1200","wrapper_min_width_page_template_2l_sidebars_php":"600","wrapper_orig_width_page_template_2l_sidebars_php":"75","wrapper_width_type_page_template_2r_sidebars_php":"fixed","wrapper_max_width_page_template_2r_sidebars_php":"1200","wrapper_min_width_page_template_2r_sidebars_php":"600","wrapper_orig_width_page_template_2r_sidebars_php":"75","wrapper_width_type":"fixed","wrapper_max_width":"1250","wrapper_min_width":"600","wrapper_orig_width":"75","wrapper_width_type_page_template_no_sidebars_php":"fixed","wrapper_max_width_page_template_no_sidebars_php":"1250","wrapper_min_width_page_template_no_sidebars_php":"600","wrapper_orig_width_page_template_no_sidebars_php":"75","suf_featured_interval":"4000","suf_featured_transition_speed":"1000","suf_featured_fx":"fade","suf_featured_pause":"Pause","suf_featured_resume":"Resume","suf_featured_sync":"0","suf_featured_pager_style":"numbers","suf_nav_delay":"500","suf_nav_effect":"fade","suf_navt_delay":"500","suf_navt_effect":"fade","suf_jq_masonry_enabled":"disabled","suf_fix_aspect_ratio":"preserve","suf_show_drop_caps":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-content/themes/suffusion/scripts/suffusion.js?ver=4.4.7'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-content/themes/suffusion/dbx.js'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="//www.debianadmin.com/xmlrpc.php?rsd"/>
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="//www.debianadmin.com/wp-includes/wlwmanifest.xml"/>
+<link rel='canonical' href='//www.debianadmin.com/users-and-groups-administration-in-linux.html'/>
+<link rel='shortlink' href='//www.debianadmin.com/?p=106'/>
+ 
+ 
+<script type="text/javascript">
+            var _statcounter = _statcounter || [];
+            _statcounter.push({"tags": {"author": "ruchi"}});
+        </script>
+<script type="text/javascript">
+	jQuery(document).ready(function($){	
+	    var select = $('a[href$=".bmp"],a[href$=".gif"],a[href$=".jpg"],a[href$=".jpeg"], a[href$=".png"],a[href$=".BMP"],a[href$=".GIF"],a[href$=".JPG"],a[href$=".JPEG"],a[href$=".PNG"]');
+		select.slimbox();
+	});
+</script>
+ 
+ 
+ 
+<script type="text/javascript">//<![CDATA[
+
+					var sampling_active = 0;
+					var sampling_rate   = 100;
+					var do_request = false;
+
+					if ( !sampling_active ) {
+						do_request = true;
+					} else {
+						var num = Math.floor(Math.random() * sampling_rate) + 1;
+						do_request = ( 1 === num );
+					}
+
+					if ( do_request ) {
+
+						// Create XMLHttpRequest object and set variables
+						var xhr = ( window.XMLHttpRequest )
+						  ? new XMLHttpRequest()
+						  : new ActiveXObject( "Microsoft.XMLHTTP" ),
+						url = 'http://www.debianadmin.com/wp-admin/admin-ajax.php',
+						params = 'action=update_views_ajax&token=cc7adb64c5&wpp_id=106';
+						// Set request method and target URL
+						xhr.open( "POST", url, true );
+						// Set request header
+						xhr.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
+						// Hook into onreadystatechange
+						xhr.onreadystatechange = function() {
+							if ( 4 === xhr.readyState && 200 === xhr.status ) {
+								if ( window.console && window.console.log ) {
+									window.console.log( xhr.responseText );
+								}
+							}
+						};
+						// Send request
+						xhr.send( params );
+
+					}
+
+				//]]></script>
+ 
+ 
+<script type="text/javascript">
+/* <![CDATA[ */
+window.onload = function() {
+	//initialise the docking boxes manager
+	var manager = new dbxManager('main'); 	//session ID [/-_a-zA-Z0-9/]
+
+	var sidebar_2 = new dbxGroup(
+		'sidebar-2', 		// container ID [/-_a-zA-Z0-9/]
+		'vertical', 		// orientation ['vertical'|'horizontal']
+		'7', 			// drag threshold ['n' pixels]
+		'no',			// restrict drag movement to container axis ['yes'|'no']
+		'10', 			// animate re-ordering [frames per transition, or '0' for no effect]
+		'no', 			// include open/close toggle buttons ['yes'|'no']
+		'open', 		// default state ['open'|'closed']
+		'open', 		// word for "open", as in "open this box"
+		'close', 		// word for "close", as in "close this box"
+		'click-down and drag to move this box', // sentence for "move this box" by mouse
+		'click to %toggle% this box', // pattern-match sentence for "(open|close) this box" by mouse
+		'use the arrow keys to move this box', // sentence for "move this box" by keyboard
+		', or press the enter key to %toggle% it',  // pattern-match sentence-fragment for "(open|close) this box" by keyboard
+		'%mytitle%  [%dbxtitle%]' // pattern-match syntax for title-attribute conflicts
+	);
+};
+/* ]]> */
+</script>
+ 
+</head>
+<body class="single single-post postid-106 single-format-standard light-theme-purple suffusion-custom preset-1200px device-desktop">
+<div id="wrapper" class="fix">
+<div id="header-container" class="custom-header fix">
+<header id="header" class="fix">
+<h2 class="blogtitle left"><a href="http://www.debianadmin.com">Debian Admin</a></h2>
+<div class="description left">Debian/Ubuntu Linux System Administration Tutorials,Howtos,Tips</div>
+</header> 
+<nav id="nav" class="tab fix">
+<div class='col-control left'>
+ 
+<div id="right-header-widgets" class="warea">
+<div id="cse-search-form36" style="width: 100%;">Loading</div>
+<script type="text/javascript">
+        google.load('search', '1', {language: 'en_US'});
+        google.setOnLoadCallback(function () {
+            var customSearchControl = new google.search.CustomSearchControl('017338271194360913207:igegakgtyd4');
+            customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+                        customSearchControl.setLinkTarget(google.search.Search.LINK_TARGET_SELF);
+                        var options = new google.search.DrawOptions();
+            options.setSearchFormRoot('cse-search-form36');
+            options.setAutoComplete(true);
+                        customSearchControl.draw('dialog', options);
+            customSearchControl.setSearchCompleteCallback(this, CallBackDisplayDialog);
+                    }, true);
+
+        // establish a keep callback
+        function CallBackDisplayDialog(result) {
+            jQuery('#dialog').dialog('open');
+        }
+    </script>
+ 
+<div id="dialog" title="Search Results">
+<p></p>
+</div>
+</div>
+ 
+<ul class='sf-menu'>
+<li class="page_item page-item-21"><a href="http://www.debianadmin.com/about-2">About Author</a></li>
+<li class="page_item page-item-19"><a href="http://www.debianadmin.com/contact">Contact</a></li>
+<li class="page_item page-item-633"><a href="http://www.debianadmin.com/debian-hosting">Debian Hosting</a></li>
+<li class="page_item page-item-626"><a href="http://www.debianadmin.com/top-posts">Popular Posts</a></li>
+<li class="page_item page-item-846"><a href="http://www.debianadmin.com/privacy-policy">Privacy Policy</a></li>
+<li class="page_item page-item-34"><a href="http://www.debianadmin.com/sitemap">Sitemap</a></li>
+</ul>
+</div> 
+</nav> 
+</div> 
+<div id="container" class="fix">
+<div id="main-col">
+<div id="content">
+<article class="post-106 post type-post status-publish format-standard hentry category-general tag-addgroup tag-adduser tag-delgroup tag-deluser tag-groupadd tag-groupdel tag-groupmod tag-groups-command tag-useradd tag-userdel tag-usermod category-6-id full-content meta-position-corners fix" id="post-106">
+<header class='post-header title-container fix'>
+<div class="title">
+<h1 class="posttitle"><a href='http://www.debianadmin.com/users-and-groups-administration-in-linux.html' class='entry-title' rel='bookmark' title='Users and Groups Administration in Linux'>Users and Groups Administration in Linux</a></h1>
+<div class="postdata fix">
+<span class="category"><span class="icon">&nbsp;</span><a href="http://www.debianadmin.com/category/general" rel="category tag">General</a></span>
+<span class="comments"><span class="icon">&nbsp;</span><a href="#respond">Add comments</a></span>
+</div> 
+</div> 
+<div class="date"><span class="month">Oct</span> <span class="day">11</span><span class="year">2006</span></div>
+</header> 
+<span class='post-format-icon'>&nbsp;</span><span class='updated' title='2006-10-11T06:54:23+00:00'></span> <div class="entry-container fix">
+<div class="entry fix">
+<div class="KonaBody"><p><h9>Sponsored Link</h9>
+<div style="display:block;float:left;padding:5px;">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-3561711309083119";
+    google_ad_slot = "2438909791";
+    google_ad_width = 336;
+    google_ad_height = 280;
+</script>
+ 
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>The user information is stored in the system /etc/passwd and /etc/shadow files, and that additionally, group membership information is stored in the /etc/group file. The update-passwd tool keeps the entries in these master files in sync on all Debian systems.While it is possible to edit these files by hand, it is not recommended.There exist several command line tools, which can be used to manage these files instead.<br/>
+<span id="more-106"></span><br/>
+Now we are going to see the complete users and groups administration commands with examples and man pages.</p>
+<p><strong>Users </strong><strong>Administration</strong><strong> in Linux</strong></p>
+<p><strong>Add New User in Linux</strong></p>
+<p><strong>useradd</strong> -- Create a new user or update default new user information</p>
+<p><strong>Syntax</strong></p>
+<p>useradd [-c comment] [-d home_dir] [-e expire_date] [-f inactive_days] [-g initial_group] [-G group[,...]] [-m [-k skeleton_dir]] [-o] [-p passwd] [-s shell] [-u uid] login</p>
+<p>useradd -D [-g default_group] [-b default_home] [-e default_expire_date]<br/>
+[-f default_inactive] [-s default_shell]</p>
+<p>If you want to know more available options you need to check the useradd <a target="_blank" href="http://www.debianadmin.com/manpages/user/useraddmanpage.htm">man page</a></p>
+<p><strong>Examples</strong></p>
+<p><strong>Adding New User</strong></p>
+<p>First you need to create three (test1,test2,admin1) groups for our examples using groupadd</p>
+<p><strong>Options</strong></p>
+<p>-d home directory</p>
+<p>-s starting program (shell)</p>
+<p>-p password</p>
+<p>-g (primary group assigned to the users)</p>
+<p>-G (Other groups the user belongs to)</p>
+<p>-m (Create the user's home directory )</p>
+<p>To add a new user with</p>
+<p>a primary group of test1</p>
+<p>a second group test2</p>
+<p>starting shell /bin/bash</p>
+<p>password of xxxx</p>
+<p>home directory of admin</p>
+<p>create home directory</p>
+<p>a login name of admin</p>
+<p>#useradd -g test1 -G test2 -s /bin/bash -p xxxx -d/home/admin -m admin</p>
+<p>This will create a new user admin.</p>
+<p>One additional switch worth mentioning is "-D", which controls the defaults for useradd.</p>
+<p>Specifying the "-D" switch on its own will simply display the default settings, while specifying -D in conjunction with other switches will change the defaults to those values.</p>
+<p># useradd -D</p>
+<p>GROUP=100<br/>
+INACTIVE=-1HOME=/home<br/>
+INACTIVE=-1<br/>
+EXPIRE=<br/>
+SHELL=/bin/bash<br/>
+SKEL=/etc/skel</p>
+<p># useradd -D -s /bin/sh</p>
+<p># useradd -D</p>
+<p>GROUP=100<br/>
+HOME=/home<br/>
+INACTIVE=-1<br/>
+EXPIRE=<br/>
+SHELL=/bin/sh<br/>
+SKEL=/etc/skel</p>
+<p>As you can see, this changes the default shell for created users from "bash" to "sh".</p>
+<p><strong>adduser</strong> -- User Friendly Frontend for useradd command</p>
+<p><strong>Syntax</strong></p>
+<p>adduser [options] user group</p>
+<p>If you want to know available option refer add user <a target="_blank" href="http://www.debianadmin.com/manpages/user/addusermanpage.htm">man page</a></p>
+<p><strong>Example</strong></p>
+<p>#adduser admin</p>
+<p>Adding user `admin' ...<br/>
+Adding new group `admin' (1001) ...<br/>
+Adding new user `admin' (1001) with group `admin' ...<br/>
+Creating home directory `/home/admin' ...<br/>
+Copying files from `/etc/skel' ...<br/>
+Enter new UNIX password:<br/>
+Retype new UNIX password:<br/>
+passwd: password updated successfully<br/>
+Changing the user information for admin<br/>
+Enter the new value, or press ENTER for the default<br/>
+Full Name []: Admin<br/>
+Room Number []:<br/>
+Work Phone []:<br/>
+Home Phone []:<br/>
+Other []:<br/>
+Is the information correct? [y/N] y</p>
+<p>You'll notice that, by default, the adduser command creates a group with the same name as the username, and makes this group the primary group for that user. This is called a user private group (UPG)</p>
+<p><strong>Modify User in Linux</strong></p>
+<p><strong>usermod</strong> -- Modify a user account</p>
+<p><strong>Syntax </strong></p>
+<p>usermod [-c comment] [-d home_dir [-m]] [-e expire_date] [-f inactive_days]<br/>
+[-g initial_group] [-G group [,...]] [-l login_name] [-p passwd] [-s shell] [-u uid [-o]] [-L|-U] login</p>
+<p>If you want to know available option check usermod <a target="_blank" href="http://www.debianadmin.com/manpages/user/usermodmanpage.htm">man page</a></p>
+<p><strong>Example</strong></p>
+<p>Options:</p>
+<p>-d home directory</p>
+<p>-s starting program (shell)</p>
+<p>-p password</p>
+<p>-g (primary group assigned to the users)</p>
+<p>-G (Other groups the user belongs to)</p>
+<p>To add the group &#8216;others' to the user admin</p>
+<p>#usermod -G others admin</p>
+<p><strong>Delete User in Linux</strong></p>
+<p><strong>userdel</strong> -- Delete a user account and related files</p>
+<p><strong>Syntax</strong></p>
+<p>userdel [-r] login</p>
+<p>If you want to know available options check userdel <a target="_blank" href="http://www.debianadmin.com/manpages/user/userdelmanpage.htm">man page</a></p>
+<p><strong>Example</strong></p>
+<p>Options</p>
+<p>-r (remove home directory)</p>
+<p>To remove the user &#8216;admin' and his home directory</p>
+<p>#userdel -r admin</p>
+<p><strong>deluser</strong> -- remove a user from the system</p>
+<p><strong>Syntax</strong></p>
+<p>deluser [options] user group</p>
+<p>If you want more options check deluser <a target="_blank" href="http://www.debianadmin.com/manpages/user/delusermanpage.htm">man page</a></p>
+<p><strong>Example</strong></p>
+<p>By default, deluser will remove the user without removing the home directory, the mail spool or any other files on the system owned by the user. Removing the home directory and mail spool can be achieved using the --remove-home option. If the --home option is given, deluser will only remove the user if the directory given to the --home option matches the user's real home directory.</p>
+<p>#deluser --remove-home admin</p>
+<p><strong>Groups Administration in Linux</strong></p>
+<p><strong>Add New Group in Linux</strong></p>
+<p><strong>groupadd</strong> -- Create a new group</p>
+<p><strong>Syntax</strong></p>
+<p>groupadd [-g gid [-o]] group</p>
+<p>For more options check groupadd <a target="_blank" href="http://www.debianadmin.com/manpages/user/groupaddmanpage.htm">man page</a></p>
+<p><strong>Example</strong></p>
+<p>#groupadd test1</p>
+<p>This will create a test1 group</p>
+<p><strong>addgroup</strong> -- add a group to the system</p>
+<p><strong>Syntax</strong></p>
+<p>addgroup [options] [--gid ID] group</p>
+<p>If you want to know available options check addgroup <a target="_blank" href="http://www.debianadmin.com/manpages/user/addgroupmanpage.htm">man page</a></p>
+<p>#addgroup</p>
+<p>Enter a groupname to add: admin1<br/>
+Adding group `admin1&#8242; (1001)...<br/>
+Done.</p>
+<p><strong>Modify Group in Linux</strong></p>
+<p><strong>groupmod</strong> -- Modify a group</p>
+<p><strong>Syntax</strong></p>
+<p>groupmod [-g gid [-o]] [-n group_name ] group</p>
+<p>For more options check groupmod <a target="_blank" href="http://www.debianadmin.com/manpages/user/groupmodmanpage.htm">man page</a></p>
+<p><strong>Example</strong></p>
+<p>#groupmod test1 test2</p>
+<p>This will modify group name test1 to test2</p>
+<p><strong>Delete group in Linux</strong></p>
+<p><strong>groupdel</strong> -- Delete a group</p>
+<p><strong>Syntax</strong></p>
+<p>groupdel groupname</p>
+<p>For more options check groupdel <a target="_blank" href="http://www.debianadmin.com/manpages/user/groupdelmanpage.htm">man page</a></p>
+<p><strong>Example</strong></p>
+<p>#groupdel test2</p>
+<p>this will delete the test2 group</p>
+<p><strong>delgroup</strong> -- remove a group from the system</p>
+<p><strong>Syntax</strong></p>
+<p>delgroup [options] [--only-if-empty] group</p>
+<p>For more details about options check delgroup <a target="_blank" href="http://www.debianadmin.com/manpages/user/delusermanpage.htm">man page</a></p>
+<p><strong>Example</strong></p>
+<p>#delgroup --only-if-empty test2</p>
+<p>Removing group `test2'...<br/>
+done.</p>
+<p><strong>groups Command</strong></p>
+<p>print the groups a user is in</p>
+<p><strong>Syntax</strong></p>
+<p>groups [username]</p>
+<p>This simple command displays what groups a user is a member of. It takes the username of user as a parameter. If no username is given, it defaults to the current user.</p>
+<p># groups</p>
+<p>root</p>
+<p># groups admin</p>
+<p>test1 : test2</p>
+<p><center><h9>Sponsored Link</h9></center>
+<center>
+<script type="text/javascript">
+    google_ad_client = "ca-pub-3561711309083119";
+    google_ad_slot = "2438909791";
+    google_ad_width = 336;
+    google_ad_height = 280;
+</script>
+ 
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</center></p>
+<div class="betterrelated"><p><strong>Related content:</strong></p>
+<ol><li> <a href="http://www.debianadmin.com/providing-root-privileges-for-users-using-sudo.html" title="Permanent link to Providing root privileges for users Using SUDO">Providing root privileges for users Using SUDO</a> </li>
+<li> <a href="http://www.debianadmin.com/mount-a-remote-file-system-through-ssh-using-sshfs.html" title="Permanent link to Mount a remote file system through ssh Using sshfs">Mount a remote file system through ssh Using sshfs</a> </li>
+<li> <a href="http://www.debianadmin.com/webdav-configuration-with-apache2-on-debian-etch.html" title="Permanent link to WebDAV Configuration With Apache2 On Debian Etch">WebDAV Configuration With Apache2 On Debian Etch</a> </li>
+<li> <a href="http://www.debianadmin.com/debianubuntu-package-management-using-dpkg.html" title="Permanent link to Debian/Ubuntu Package management Using dpkg">Debian/Ubuntu Package management Using dpkg</a> </li>
+<li> <a href="http://www.debianadmin.com/running-vhosts-with-apache2-mpm-itk-on-debian.html" title="Permanent link to Running Vhosts With Apache2 mpm-itk On Debian">Running Vhosts With Apache2 mpm-itk On Debian</a> </li>
+</ol></div></div>  </div> 
+</div> 
+<footer class="post-footer postdata fix">
+<span class="author"><span class="icon">&nbsp;</span>Posted by <span class="vcard"><a href="http://www.debianadmin.com/author/Debianadmin" class="url fn" rel="author">ruchi</a></span> at 6:54 am</span></footer> 
+<section id="comments">
+<h3 class="comments"><span class="icon">&nbsp;</span>
+13 Responses to &#8220;Users and Groups Administration in Linux&#8221;</h3>
+<ol class="commentlist">
+<li id="comment-3227" class="comment even thread-even depth-1 plain-nested">
+<div id="div-comment-3227" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//2.gravatar.com/avatar/e5045e49dfc88c15a241e1acfd4ffccf?s=48&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e5045e49dfc88c15a241e1acfd4ffccf?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn"><a href='http://none.....yet' rel='external nofollow' class='url'>erik van tooren</a></cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-3227">
+June 17, 2009 at 7:03 pm</a> </div>
+</div>
+<p>so i guess i would like to make use of FUSE so i can &#8220;mount&#8221; Gmailfs as a user.can you tell me:do i need to place my user in the fuse group or do i need to place fuse in my usergroup? and wile you&#8217;re at it how do i do it&#8230;.<br/>
+it would be nice to understand this better.<br/>
+thanks</p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-4757" class="comment odd alt thread-odd thread-alt depth-1 plain-nested">
+<div id="div-comment-4757" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//1.gravatar.com/avatar/432be79dc93e56dd7e55038bddfbfa0d?s=48&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/432be79dc93e56dd7e55038bddfbfa0d?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn">Surjit Thakur</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-4757">
+March 30, 2010 at 6:38 am</a> </div>
+</div>
+<p>How to add different users to a single group</p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-6167" class="comment even thread-even depth-1 plain-nested">
+<div id="div-comment-6167" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//2.gravatar.com/avatar/bce834449ddafe07d7e1c6457ea22148?s=48&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/bce834449ddafe07d7e1c6457ea22148?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn">saorabh kumar</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-6167">
+October 26, 2010 at 7:21 am</a> </div>
+</div>
+<p>you can add differnt user in a single group by: usermod -G secondrygroup username</p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-9069" class="comment odd alt thread-odd thread-alt depth-1 plain-nested">
+<div id="div-comment-9069" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//0.gravatar.com/avatar/3a22d6472e63b10082219b2cb5d40f8f?s=48&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3a22d6472e63b10082219b2cb5d40f8f?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn"><a href='http://.' rel='external nofollow' class='url'>Raj kumar</a></cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-9069">
+November 27, 2011 at 1:51 am</a> </div>
+</div>
+<p>thanx a lot!!!</p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-10253" class="comment even thread-even depth-1 plain-nested">
+<div id="div-comment-10253" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//2.gravatar.com/avatar/ba81a4d602a8c12349b42494909795d2?s=48&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/ba81a4d602a8c12349b42494909795d2?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn"><a href='http://linux' rel='external nofollow' class='url'>Naresh</a></cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-10253">
+March 9, 2012 at 12:05 pm</a> </div>
+</div>
+<p>how to delete group in Linux those who are not having primary group users presented in that group.<br/>
+I have added a users like this<br/>
+useradd -g hr user1<br/>
+useradd -g hr user2</p>
+<p>now I want to delete hr group please answer my query?<br/>
+please any body help me. my email id:<a class="__cf_email__" href="/cdn-cgi/l/email-protection" data-cfemail="5d2b382f2873333c2f382e351d243c353232733e32733433">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">
+/* <![CDATA[ */!function(){try{var t="currentScript"in document?document.currentScript:function(){for(var t=document.getElementsByTagName("script"),e=t.length;e--;)if(t[e].getAttribute("data-cfhash"))return t[e]}();if(t&&t.previousSibling){var e,r,n,i,c=t.previousSibling,a=c.getAttribute("data-cfemail");if(a){for(e="",r=parseInt(a.substr(0,2),16),n=2;a.length-n;n+=2)i=parseInt(a.substr(n,2),16)^r,e+=String.fromCharCode(i);e=document.createTextNode(e),c.parentNode.replaceChild(e,c)}t.parentNode.removeChild(t);}}catch(u){}}()/* ]]> */</script></p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-10622" class="comment odd alt thread-odd thread-alt depth-1 plain-nested">
+<div id="div-comment-10622" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//2.gravatar.com/avatar/27027696e65588820b423aca11b11edc?s=48&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/27027696e65588820b423aca11b11edc?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn"><a href='http://asd' rel='external nofollow' class='url'>Cmon</a></cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-10622">
+March 22, 2012 at 10:52 pm</a> </div>
+</div>
+<p>How i can add group, give acces (download rights for ftp) :/</p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-11215" class="comment even thread-even depth-1 plain-nested">
+<div id="div-comment-11215" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//1.gravatar.com/avatar/765449ae44aaed15774267566fe9c950?s=48&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/765449ae44aaed15774267566fe9c950?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn">Cosaslibres</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-11215">
+May 20, 2012 at 8:38 pm</a> </div>
+</div>
+<p>Algunos comandos GNU/Linux en español <a href="http://cosaslibres.com.co/ayuda-en-linux/man-comandos-linux/" rel="nofollow">http://cosaslibres.com.co/ayuda-en-linux/man-comandos-linux/</a></p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-11250" class="comment odd alt thread-odd thread-alt depth-1 plain-nested">
+<div id="div-comment-11250" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//2.gravatar.com/avatar/ec3b29b392d7f0e2ce22d9042de40be6?s=48&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/ec3b29b392d7f0e2ce22d9042de40be6?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn">Seng_samathit</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-11250">
+June 24, 2012 at 7:54 am</a> </div>
+</div>
+<p>thak</p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-11274" class="comment even thread-even depth-1 plain-nested">
+<div id="div-comment-11274" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//1.gravatar.com/avatar/dd42c6464ed8ac12f555e1fd0a795139?s=48&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/dd42c6464ed8ac12f555e1fd0a795139?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn">akhil999in</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-11274">
+July 22, 2012 at 2:43 pm</a> </div>
+</div>
+<p>What is the real meaning of Groups ?<br/>
+Most of the default group names are named after programs.<br/>
+It seems that it is not like a group of people but some sort of category related to programs.<br/>
+Please make this more clear.</p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-11491" class="comment odd alt thread-odd thread-alt depth-1 plain-nested">
+<div id="div-comment-11491" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//1.gravatar.com/avatar/4b09ff6d16d9e4ace8ca4c0d680c298b?s=48&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/4b09ff6d16d9e4ace8ca4c0d680c298b?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn">Herr Hur</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-11491">
+April 11, 2013 at 5:56 am</a> </div>
+</div>
+<p>You have to add yourself to the fuse group&#8230; sorry for late reply 😉<br/>
+only commenting so others will learn from it.</p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-11492" class="comment even thread-even depth-1 plain-nested">
+<div id="div-comment-11492" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//1.gravatar.com/avatar/4b09ff6d16d9e4ace8ca4c0d680c298b?s=48&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/4b09ff6d16d9e4ace8ca4c0d680c298b?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn">Herr Hur</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-11492">
+April 11, 2013 at 5:58 am</a> </div>
+</div>
+<p>How to add a user to a group:</p>
+<p><code>useradd -G {group-name} username</code></p>
+<p>To see if it worked:<br/>
+<code> groups {username} </code></p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-11493" class="comment odd alt thread-odd thread-alt depth-1 plain-nested">
+<div id="div-comment-11493" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//1.gravatar.com/avatar/4b09ff6d16d9e4ace8ca4c0d680c298b?s=48&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/4b09ff6d16d9e4ace8ca4c0d680c298b?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn">Herr Hur</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-11493">
+April 11, 2013 at 6:08 am</a> </div>
+</div>
+<p>A group is a group of users. Often some programs require special privileges In this case, groups are used to reserve the full access to this program for only those who are in this special group.</p>
+<p>A common example is Fuse. Fuse let&#8217;s you mount filesystems, which traditionally is a right reserved to administrators. By adding a user to the <code>fuse</code> group, this user gets elevated privileges &#8211; the privilege to use Fuse.</p>
+<p>The groups you create manually will probably be more related to your organizational structure. You could add groups such as <code>students</code> or <code>accounting</code>, and use those for restricting access to various files.</p>
+</div>
+<div class="reply">
+</div>
+</li> 
+<li id="comment-27746" class="comment even thread-even depth-1 plain-nested">
+<div id="div-comment-27746" class="comment-body">
+<div class="comment-author fix vcard">
+<img alt='' src='//2.gravatar.com/avatar/8059af7e6a70dec6b9f8756ed6875bee?s=48&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8059af7e6a70dec6b9f8756ed6875bee?s=96&amp;d=mm&amp;r=g 2x' class='avatar avatar-48 photo' height='48' width='48'/> <div class="comment-author-link">
+<cite class="fn">Paul Carter</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="http://www.debianadmin.com/users-and-groups-administration-in-linux.html/comment-page-1#comment-27746">
+January 19, 2015 at 9:02 pm</a> </div>
+</div>
+<p>Could be important to know that:<br/>
+useradd -G {group1},{group2} {username} will set the {username}&#8217;s group membership to just group1 and group2.<br/>
+To add an extra group membership, use<br/>
+useradd -a -G {group3} {username}<br/>
+After these are completed, do<br/>
+groups {username}<br/>
+to see group membership, which should be {group1}, {group2} and {group3), along with the user&#8217;s primary group membership.</p>
+</div>
+<div class="reply">
+</div>
+</li> 
+</ol>
+<div class="navigation fix">
+<div class="alignleft"></div>
+<div class="alignright"></div>
+</div>
+<div id="respond" class="comment-respond">
+<h3 id="reply-title" class="comment-reply-title"><span class="icon">&nbsp;</span>Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/users-and-groups-administration-in-linux.html#respond" style="display:none;">Cancel reply</a></small></h3>
+<form action="//www.debianadmin.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+<span></span>
+<p>
+<label for='author' class='suf-comment-label'>Name</label>
+<input type='text' name='author' id='author' class='textarea' value='' size='28' tabindex='1'/> (required)
+</p>
+<p>
+<label for='email' class='suf-comment-label'>E-mail</label>
+<input type='text' name='email' id='email' value='' size='28' tabindex='2' class='textarea'/> (required)
+</p>
+<p>
+<label for='url' class='suf-comment-label'>URI</label>
+<input type='text' name='url' id='url' value='' size='28' tabindex='3' class='textarea'/>
+</p>
+<p>
+<label for='comment' class='textarea suf-comment-label'>Your Comment</label>
+<textarea name="218ff-comment" id='comment' cols='60' rows='10' tabindex='4' class='textarea'></textarea><textarea name="comment" style="display:none" rows="1" cols="1"></textarea>
+</p> <p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes: <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;s&gt; &lt;strike&gt; &lt;strong&gt; </code></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Submit Comment"/> <input type='hidden' name='comment_post_ID' value='106' id='comment_post_ID'/>
+<input type='hidden' name='comment_parent' id='comment_parent' value='0'/>
+</p> </form>
+</div> 
+</section>   </article> 
+<nav class='post-nav fix'>
+<table>
+<tr>
+<td class='previous'><a href="http://www.debianadmin.com/install-iceweasel-web-browser-in-debian-and-ubuntu.html" rel="prev"><span class="icon">&nbsp;</span> Install Iceweasel Web Browser in Debian and Ubuntu</a></td>
+<td class='next'><a href="http://www.debianadmin.com/install-swiftfox-web-browser-for-faster-browsing.html" rel="next"><span class="icon">&nbsp;</span> Install Swiftfox Web Browser for faster Browsing</a></td>
+</tr>
+</table>
+</nav>
+</div> 
+</div> 
+<div id='sidebar-shell-1' class='sidebar-shell sidebar-shell-left'>
+<div class="dbx-group left boxed warea" id="sidebar">
+ <aside id="text-312439502" class="dbx-box suf-widget widget_text"><div class="dbx-content"><h3 class="dbx-handle plain">Sponsored Link</h3> <div class="textwidget"><ul>
+<a href="http://www.a2hosting.com/1659-vps-224-custom.html" target="_blank">
+<img src="//www.debianadmin.com/images/debian.png" border="0" alt="Cheap Web Hosting"/></a>
+</ul>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3561711309083119";
+//UGleft160x90
+google_ad_slot = "0800632016";
+google_ad_width = 160;
+google_ad_height = 90;
+//--></script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+</div></aside>  <aside id="categories-312437344" class="dbx-box suf-widget widget_categories"><div class="dbx-content"><h3 class="dbx-handle plain">Categories</h3> <ul>
+<li class="cat-item cat-item-3"><a href="http://www.debianadmin.com/category/backup">Backup</a>
+</li>
+<li class="cat-item cat-item-4"><a href="http://www.debianadmin.com/category/database">Database</a>
+</li>
+<li class="cat-item cat-item-638"><a href="http://www.debianadmin.com/category/free-tools">Free-Tools</a>
+</li>
+<li class="cat-item cat-item-6"><a href="http://www.debianadmin.com/category/general">General</a>
+</li>
+<li class="cat-item cat-item-7"><a href="http://www.debianadmin.com/category/monitoring">Monitoring</a>
+</li>
+<li class="cat-item cat-item-8"><a href="http://www.debianadmin.com/category/network">Network</a>
+</li>
+<li class="cat-item cat-item-9"><a href="http://www.debianadmin.com/category/other-linux">Other Linux</a>
+</li>
+<li class="cat-item cat-item-1288"><a href="http://www.debianadmin.com/category/package-mgmt">Package-Mgmt</a>
+</li>
+<li class="cat-item cat-item-11"><a href="http://www.debianadmin.com/category/security">Security</a>
+</li>
+<li class="cat-item cat-item-12"><a href="http://www.debianadmin.com/category/webserver">Webserver</a>
+</li>
+</ul>
+</div></aside>  <aside id="text-312439503" class="dbx-box suf-widget widget_text"><div class="dbx-content"><h3 class="dbx-handle plain">Sponsored Link</h3> <div class="textwidget"><script type="text/javascript"><!--
+google_ad_client = "pub-3561711309083119";
+//UGleft160x90
+google_ad_slot = "0800632016";
+google_ad_width = 160;
+google_ad_height = 90;
+//--></script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+</div></aside>  <aside id="suf-subscription-3" class="dbx-box suf-widget widget-suf-subscription"><div class="dbx-content"><h3 class="dbx-handle plain">Follow Me</h3> <div class='fix'>
+<a href="http://feeds.feedburner.com/debiansystemadmin" class="follow-icon-and-tag" title="RSS">
+<img src="//www.debianadmin.com/wp-content/themes/suffusion/images/follow/RSS-15.png" alt="RSS" style='width: 64px; height: 64px;'/>
+</a>
+<a href="http://twitter.com/debiantutorials" class="follow-icon-and-tag" title="Twitter">
+<img src="//www.debianadmin.com/wp-content/themes/suffusion/images/follow/Twitter-01.png" alt="Twitter" style='width: 64px; height: 64px;'/>
+</a>
+</div>
+</div></aside>  <aside id="archives-3" class="dbx-box suf-widget widget_archive"><div class="dbx-content"><h3 class="dbx-handle plain">Archives</h3> <label class="screen-reader-text" for="archives-dropdown-3">Archives</label>
+<select id="archives-dropdown-3" name="archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'>
+<option value="">Select Month</option>
+<option value='http://www.debianadmin.com/2015/09'> September 2015 </option>
+<option value='http://www.debianadmin.com/2015/07'> July 2015 </option>
+<option value='http://www.debianadmin.com/2015/06'> June 2015 </option>
+<option value='http://www.debianadmin.com/2015/05'> May 2015 </option>
+<option value='http://www.debianadmin.com/2015/04'> April 2015 </option>
+<option value='http://www.debianadmin.com/2015/02'> February 2015 </option>
+<option value='http://www.debianadmin.com/2015/01'> January 2015 </option>
+<option value='http://www.debianadmin.com/2014/10'> October 2014 </option>
+<option value='http://www.debianadmin.com/2014/09'> September 2014 </option>
+<option value='http://www.debianadmin.com/2014/08'> August 2014 </option>
+<option value='http://www.debianadmin.com/2014/07'> July 2014 </option>
+<option value='http://www.debianadmin.com/2014/05'> May 2014 </option>
+<option value='http://www.debianadmin.com/2014/04'> April 2014 </option>
+<option value='http://www.debianadmin.com/2014/03'> March 2014 </option>
+<option value='http://www.debianadmin.com/2014/02'> February 2014 </option>
+<option value='http://www.debianadmin.com/2014/01'> January 2014 </option>
+<option value='http://www.debianadmin.com/2013/12'> December 2013 </option>
+<option value='http://www.debianadmin.com/2013/11'> November 2013 </option>
+<option value='http://www.debianadmin.com/2013/10'> October 2013 </option>
+<option value='http://www.debianadmin.com/2013/09'> September 2013 </option>
+<option value='http://www.debianadmin.com/2013/08'> August 2013 </option>
+<option value='http://www.debianadmin.com/2013/07'> July 2013 </option>
+<option value='http://www.debianadmin.com/2013/06'> June 2013 </option>
+<option value='http://www.debianadmin.com/2013/05'> May 2013 </option>
+<option value='http://www.debianadmin.com/2013/04'> April 2013 </option>
+<option value='http://www.debianadmin.com/2013/03'> March 2013 </option>
+<option value='http://www.debianadmin.com/2013/02'> February 2013 </option>
+<option value='http://www.debianadmin.com/2013/01'> January 2013 </option>
+<option value='http://www.debianadmin.com/2012/12'> December 2012 </option>
+<option value='http://www.debianadmin.com/2012/11'> November 2012 </option>
+<option value='http://www.debianadmin.com/2012/10'> October 2012 </option>
+<option value='http://www.debianadmin.com/2012/09'> September 2012 </option>
+<option value='http://www.debianadmin.com/2012/08'> August 2012 </option>
+<option value='http://www.debianadmin.com/2012/07'> July 2012 </option>
+<option value='http://www.debianadmin.com/2012/06'> June 2012 </option>
+<option value='http://www.debianadmin.com/2012/05'> May 2012 </option>
+<option value='http://www.debianadmin.com/2012/04'> April 2012 </option>
+<option value='http://www.debianadmin.com/2012/03'> March 2012 </option>
+<option value='http://www.debianadmin.com/2012/02'> February 2012 </option>
+<option value='http://www.debianadmin.com/2012/01'> January 2012 </option>
+<option value='http://www.debianadmin.com/2011/12'> December 2011 </option>
+<option value='http://www.debianadmin.com/2011/11'> November 2011 </option>
+<option value='http://www.debianadmin.com/2011/10'> October 2011 </option>
+<option value='http://www.debianadmin.com/2011/09'> September 2011 </option>
+<option value='http://www.debianadmin.com/2011/08'> August 2011 </option>
+<option value='http://www.debianadmin.com/2011/07'> July 2011 </option>
+<option value='http://www.debianadmin.com/2011/06'> June 2011 </option>
+<option value='http://www.debianadmin.com/2011/05'> May 2011 </option>
+<option value='http://www.debianadmin.com/2011/04'> April 2011 </option>
+<option value='http://www.debianadmin.com/2011/03'> March 2011 </option>
+<option value='http://www.debianadmin.com/2011/02'> February 2011 </option>
+<option value='http://www.debianadmin.com/2011/01'> January 2011 </option>
+<option value='http://www.debianadmin.com/2010/12'> December 2010 </option>
+<option value='http://www.debianadmin.com/2010/11'> November 2010 </option>
+<option value='http://www.debianadmin.com/2010/10'> October 2010 </option>
+<option value='http://www.debianadmin.com/2010/09'> September 2010 </option>
+<option value='http://www.debianadmin.com/2010/08'> August 2010 </option>
+<option value='http://www.debianadmin.com/2010/07'> July 2010 </option>
+<option value='http://www.debianadmin.com/2010/06'> June 2010 </option>
+<option value='http://www.debianadmin.com/2010/05'> May 2010 </option>
+<option value='http://www.debianadmin.com/2010/03'> March 2010 </option>
+<option value='http://www.debianadmin.com/2010/02'> February 2010 </option>
+<option value='http://www.debianadmin.com/2010/01'> January 2010 </option>
+<option value='http://www.debianadmin.com/2009/12'> December 2009 </option>
+<option value='http://www.debianadmin.com/2009/11'> November 2009 </option>
+<option value='http://www.debianadmin.com/2009/10'> October 2009 </option>
+<option value='http://www.debianadmin.com/2009/09'> September 2009 </option>
+<option value='http://www.debianadmin.com/2009/08'> August 2009 </option>
+<option value='http://www.debianadmin.com/2009/07'> July 2009 </option>
+<option value='http://www.debianadmin.com/2009/06'> June 2009 </option>
+<option value='http://www.debianadmin.com/2009/05'> May 2009 </option>
+<option value='http://www.debianadmin.com/2009/04'> April 2009 </option>
+<option value='http://www.debianadmin.com/2009/03'> March 2009 </option>
+<option value='http://www.debianadmin.com/2009/02'> February 2009 </option>
+<option value='http://www.debianadmin.com/2009/01'> January 2009 </option>
+<option value='http://www.debianadmin.com/2008/12'> December 2008 </option>
+<option value='http://www.debianadmin.com/2008/11'> November 2008 </option>
+<option value='http://www.debianadmin.com/2008/10'> October 2008 </option>
+<option value='http://www.debianadmin.com/2008/09'> September 2008 </option>
+<option value='http://www.debianadmin.com/2008/08'> August 2008 </option>
+<option value='http://www.debianadmin.com/2008/07'> July 2008 </option>
+<option value='http://www.debianadmin.com/2008/06'> June 2008 </option>
+<option value='http://www.debianadmin.com/2008/05'> May 2008 </option>
+<option value='http://www.debianadmin.com/2008/04'> April 2008 </option>
+<option value='http://www.debianadmin.com/2008/03'> March 2008 </option>
+<option value='http://www.debianadmin.com/2008/02'> February 2008 </option>
+<option value='http://www.debianadmin.com/2008/01'> January 2008 </option>
+<option value='http://www.debianadmin.com/2007/12'> December 2007 </option>
+<option value='http://www.debianadmin.com/2007/11'> November 2007 </option>
+<option value='http://www.debianadmin.com/2007/10'> October 2007 </option>
+<option value='http://www.debianadmin.com/2007/09'> September 2007 </option>
+<option value='http://www.debianadmin.com/2007/08'> August 2007 </option>
+<option value='http://www.debianadmin.com/2007/07'> July 2007 </option>
+<option value='http://www.debianadmin.com/2007/06'> June 2007 </option>
+<option value='http://www.debianadmin.com/2007/05'> May 2007 </option>
+<option value='http://www.debianadmin.com/2007/04'> April 2007 </option>
+<option value='http://www.debianadmin.com/2007/03'> March 2007 </option>
+<option value='http://www.debianadmin.com/2007/02'> February 2007 </option>
+<option value='http://www.debianadmin.com/2007/01'> January 2007 </option>
+<option value='http://www.debianadmin.com/2006/12'> December 2006 </option>
+<option value='http://www.debianadmin.com/2006/11'> November 2006 </option>
+<option value='http://www.debianadmin.com/2006/10'> October 2006 </option>
+<option value='http://www.debianadmin.com/2006/09'> September 2006 </option>
+<option value='http://www.debianadmin.com/2006/08'> August 2006 </option>
+<option value='http://www.debianadmin.com/2006/07'> July 2006 </option>
+<option value='http://www.debianadmin.com/2006/06'> June 2006 </option>
+</select>
+</div></aside> </div> 
+</div>
+<div id='sidebar-shell-2' class='sidebar-shell sidebar-shell-right'>
+<div class="dbx-group right boxed warea" id="sidebar-2">
+ <aside id="text-312439504" class="dbx-box suf-widget widget_text"><div class="dbx-content"> <div class="textwidget"><h10>Sponsored Link</h10>
+<script type="text/javascript">
+    google_ad_client = "ca-pub-3561711309083119";
+    google_ad_slot = "8485443391";
+    google_ad_width = 300;
+    google_ad_height = 600;
+</script>
+ 
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div></aside>  <aside id="text-312439505" class="dbx-box suf-widget widget_text"><div class="dbx-content"><h3 class="dbx-handle plain">Favourite Sites</h3> <div class="textwidget"><a href='http://www.mydailytechtips.com'target="_blank">My Daily Tech Tips</a><br />  
+  <a href='http://www.ubuntugeek.com'target="_blank">UBuntu Geek</a><br />
+  <a href='http://www.debianhelp.co.uk/'target="_blank">DebianHelp</a><br />
+   <a href='http://www.ubuntux.org'target="_blank">Ubuntux</a><br />
+  <a href='http://www.tuxmachines.org'target="_blank">Tuxmachines</a><br />
+  <a href='http://www.debuntu.org'target="_blank">Debuntu</a><br />
+  <a href='http://www.libervis.com'target="_blank">Libervis</a><br />
+<a href='http://linuxappfinder.com'target="_blank">Linuxappfinder</a><br />
+</div>
+		</div></aside><!--widget end -->
+</div><!--/sidebar-2 -->
+</div>
+	</div><!-- /container -->
+
+<footer>
+	<div id="cred">
+		<table>
+			<tr>
+				<td class="cred-left"></td>
+				<td class="cred-center">© 2015 <a href='http://www.debianadmin.com'>Debian Admin</a></td>
+			</tr>
+		</table>
+	</div>
+</footer>
+<!-- 39 queries, 47MB in 0.539 seconds. -->
+</div><!--/wrapper -->
+<!-- location footer -->
+<!-- ngg_resource_manager_marker --><script type='text/javascript' src='//www.debianadmin.com/wp-includes/js/comment-reply.min.js?ver=4.3.1'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-includes/js/jquery/ui/mouse.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-includes/js/jquery/ui/resizable.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-includes/js/jquery/ui/draggable.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-includes/js/jquery/ui/button.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-includes/js/jquery/ui/position.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-includes/js/jquery/ui/dialog.min.js?ver=1.11.4'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var emailL10n = {"ajax_url":"http:\/\/www.debianadmin.com\/wp-admin\/admin-ajax.php","max_allowed":"5","text_error":"The Following Error Occurs:","text_name_invalid":"- Your Name is empty\/invalid","text_email_invalid":"- Your Email is empty\/invalid","text_remarks_invalid":"- Your Remarks is invalid","text_friend_names_empty":"- Friend Name(s) is empty","text_friend_name_invalid":"- Friend Name is empty\/invalid: ","text_max_friend_names_allowed":"- Maximum 5 Friend Names allowed","text_friend_emails_empty":"- Friend Email(s) is empty","text_friend_email_invalid":"- Friend Email is invalid: ","text_max_friend_emails_allowed":"- Maximum 5 Friend Emails allowed","text_friends_tally":"- Friend Name(s) count does not tally with Friend Email(s) count","text_image_verify_empty":"- Image Verification is empty"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='//www.debianadmin.com/wp-content/plugins/wp-email/email-js.js?ver=2.63'></script>
+    <!-- Start of StatCounter Code -->
+    <script>
+    <!-- 
+        var sc_project=1866832; 
+        var sc_security="b98b5182"; 
+      var sc_invisible=1;
+        var scJsHost = (("https:" == document.location.protocol) ?
+        "https://secure." : "http://www.");
+    //-->
+document.write("<sc"+"ript src='" +scJsHost +"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="web analytics" href="https://statcounter.com/"><img class="statcounter" src="//c.statcounter.com/1866832/0/b98b5182/1/" alt="web analytics" /></a></div></noscript>   
+    <!-- End of StatCounter Code -->
+<script type="text/javascript">
+            var dc_UnitID = 14;
+            var dc_PublisherID = 11034;
+            var dc_AdLinkColor ='3333FF';
+            var dc_open_new_win = 'yes';
+            var dc_isBoldActive= 'no';
+            var dc_adprod='ADL';
+</script>
+<script type="text/javascript" src="//kona.kontera.com/javascript/lib/KonaLibInline.js"></script><div style="display:none;visibility:hidden;"><ul><li>Using Rodney's Kontera ContentLinks / MIVA InLine Plugin v2.3.</li></ul></div>
+
+</body>
+</html>
