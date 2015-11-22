@@ -1,0 +1,15 @@
+# 
+
+# deb cdrom:[Debian GNU/Linux 8 _Jessie_ - Official Snapshot amd64 LIVE/INSTALL Binary 20150908-21:51]/ jessie main
+
+#deb cdrom:[Debian GNU/Linux 8 _Jessie_ - Official Snapshot amd64 LIVE/INSTALL Binary 20150908-21:51]/ jessie main
+
+deb http://debian.uchicago.edu/debian/ jessie main contrib non-free
+deb-src http://debian.uchicago.edu/debian/ jessie main contrib non-free
+
+deb http://security.debian.org/ jessie/updates main contrib non-free
+deb-src http://security.debian.org/ jessie/updates main contrib non-free
+
+# jessie-updates, previously known as 'volatile'
+deb http://debian.uchicago.edu/debian/ jessie-updates main contrib non-free
+deb-src http://debian.uchicago.edu/debian/ jessie-updates main contrib non-free
