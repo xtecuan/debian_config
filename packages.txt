@@ -3,4 +3,7 @@ nmap
 firmware-iwlwifi
 network-manager-openconnect 
 network-manager-openconnect-gnome
-
+network-manager-openvpn 
+network-manager-pptp 
+network-manager-vpnc
+remmina
