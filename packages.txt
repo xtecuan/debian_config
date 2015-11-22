@@ -1,3 +1,6 @@
 git
 nmap
 firmware-iwlwifi
+network-manager-openconnect 
+network-manager-openconnect-gnome
+
