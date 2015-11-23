@@ -7,3 +7,8 @@ network-manager-openvpn
 network-manager-pptp 
 network-manager-vpnc
 remmina
+flashplugin-nonfree
+geeqie
+file-roller
+lvm2
+virtualbox-5.0
